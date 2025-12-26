@@ -1,4 +1,8 @@
 {
+  "lib\\services\\documents.service.ts -> @/lib/firebase/firestore": {
+    "id": "lib\\services\\documents.service.ts -> @/lib/firebase/firestore",
+    "files": []
+  },
   "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
     "id": "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
     "files": [

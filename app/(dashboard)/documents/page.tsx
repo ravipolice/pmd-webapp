@@ -30,6 +30,9 @@ export default function DocumentsPage() {
   const loadDocuments = async () => {
     try {
       console.log("Loading documents...");
+      console.log("Environment:", process.env.NODE_ENV);
+      console.log("API Base URL:", typeof window !== "undefined" ? window.location.origin : "server");
+      
       // ✅ Use the service - normalization happens here
       const data = await fetchDocuments();
       console.log("Loaded documents:", data);
@@ -41,6 +44,17 @@ export default function DocumentsPage() {
       if (data.length === 0) {
         console.warn("No documents found. Make sure documents exist in the Google Sheet.");
         console.warn("Check browser console for detailed error messages.");
+        console.warn("Testing API route directly...");
+        
+        // Test API route directly
+        try {
+          const apiTest = await fetch("/api/documents");
+          console.log("API Route Status:", apiTest.status);
+          const apiData = await apiTest.json();
+          console.log("API Route Response:", apiData);
+        } catch (apiError: any) {
+          console.error("API Route Test Failed:", apiError);
+        }
       }
     } catch (error: any) {
       console.error("Error loading documents:", error);
@@ -49,7 +63,15 @@ export default function DocumentsPage() {
         code: error?.code,
         stack: error?.stack
       });
-      alert(`Failed to load documents: ${error?.message || "Unknown error"}. Please check the console for details.`);
+      
+      // Show user-friendly error
+      const errorMessage = error?.message || "Unknown error";
+      console.error("Full error:", error);
+      
+      // Don't show alert in production, just log
+      if (process.env.NODE_ENV === "development") {
+        alert(`Failed to load documents: ${errorMessage}. Please check the console for details.`);
+      }
     } finally {
       setLoading(false);
     }

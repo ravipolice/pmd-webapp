@@ -82,7 +82,10 @@ export async function fetchDocuments(): Promise<DocumentItem[]> {
     // Fetch from Apps Script API
     let apiDocs: RawApiDocument[] = [];
     try {
-      const response = await fetch("/api/documents", {
+      const apiUrl = "/api/documents";
+      console.log("Fetching from API route:", apiUrl);
+      
+      const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -90,16 +93,30 @@ export async function fetchDocuments(): Promise<DocumentItem[]> {
         cache: "no-store",
       });
 
+      console.log("API Response Status:", response.status, response.statusText);
+      console.log("API Response OK:", response.ok);
+
       if (response.ok) {
         const data = await response.json();
+        console.log("API Response Data Type:", Array.isArray(data) ? "array" : typeof data);
+        console.log("API Response Data:", data);
+        
         // Handle both array and object responses
         apiDocs = Array.isArray(data) 
           ? data 
           : (data?.data || data?.documents || data?.items || []);
         console.log(`Found ${apiDocs.length} documents from Apps Script API`);
+      } else {
+        const errorText = await response.text().catch(() => "Could not read error");
+        console.error("API Route Error Response:", response.status, errorText);
       }
     } catch (error: any) {
-      console.warn("Error fetching from Apps Script API:", error?.message || "Unknown");
+      console.error("Error fetching from Apps Script API:", error?.message || "Unknown");
+      console.error("Error details:", {
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
+      });
     }
 
     // Combine both sources (Firestore takes precedence for duplicates by URL)
