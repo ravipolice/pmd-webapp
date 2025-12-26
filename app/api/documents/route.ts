@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// Force Node.js runtime for API routes (required for Vercel)
+export const runtime = 'nodejs';
+
 // Allow overriding the Apps Script URL via env so we can switch deployments without code changes
 const DOCUMENTS_API_URL =
   process.env.NEXT_PUBLIC_DOCUMENTS_API ||
