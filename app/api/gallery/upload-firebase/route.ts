@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
 
+// Force dynamic rendering (MANDATORY for Next.js 15 API routes on Vercel)
+export const dynamic = "force-dynamic";
+
 // Try to use Firebase Admin SDK for server-side operations
 let adminInitialized = false;
 let adminStorage: any = null;

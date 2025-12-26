@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Force dynamic rendering (MANDATORY for Next.js 15 API routes on Vercel)
+export const dynamic = "force-dynamic";
+
 // Base URL should be only the Apps Script exec URL (no action or token)
 // Gallery has its own separate Apps Script deployment (different from Documents)
 const GALLERY_API_URL =

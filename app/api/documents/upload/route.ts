@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// Force dynamic rendering (MANDATORY for Next.js 15 API routes on Vercel)
+export const dynamic = "force-dynamic";
+
 const DOCUMENTS_API_URL = "https://script.google.com/macros/s/AKfycby-7jOc_naI1_XDVzG1qAGvNc9w3tIU4ZwmCFGUUCLdg0_DEJh7oouF8a9iy5E93-p9zg/exec";
 
 // Get token from environment variable (same as mobile app uses)
